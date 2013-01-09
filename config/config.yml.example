@@ -1,12 +1,12 @@
 user: 'myname@googleAccount.com'
 pass: 'myPassword!'
-receipients 'email1@email.com, email2@email.com, ...'
+receipients: 'email1@email.com, email2@email.com, ...'
 #you can obtain your trello key and secret by going to https://trello.com/1/appKey/generate
 public_key:  'trello key'
 secret: 'trello secret'
 key: 'get key from https://trello.com/1/authorize?key=PUBLIC_KEY_FROM_ABOVE&name=My+Application&expiration=never&response_type=token&scope=read,write'
 trello_board: 'board id'
-google_drive_key 'google drive key'
+google_drive_key: 'google drive key'
 
 #trello list ids
 list1 = 'trello list id 1'

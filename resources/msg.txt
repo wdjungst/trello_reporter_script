@@ -1,0 +1,22 @@
+Items added to Sprint 14
+
+1: Get Tylers github account set up and pull down netspace issues
+2: Fix netspace issues script v1
+3: idea map v2 netspace issues
+4: idea map trello archived reporting
+5: Commit code into canteloupe_koala
+6: NEX-574
+7: NEX-485
+8: NEX-285
+9: NEX-500
+10: NEX-505
+11: NEX-499
+12: Check fixes for become an academy and become a partner
+13: NEX-722
+14: NEX-701
+15: NEX-721
+16: Core canvas regression - Friday
+17: Cleanup netspace issues spreadsheet
+18: Parallels and windows 7 set up for tyler
+19: Make screenshots of the javascript overrides
+20: Go over regression process for running tests and getting tests to jeremyp

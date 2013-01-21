@@ -67,6 +67,7 @@ def menu
     puts "2.  Change sprint number"
     puts "3.  Add additional items to sprint"
     puts "4.  Revert last archive"
+    #puts "5.  Weekly update Done items to supervisor"
     puts "5.  Exit"
 
     choice = user_input
@@ -79,6 +80,8 @@ def menu
         add_items_to_sprint
       when 4
         revert_last_archive
+      #when 5
+      #  email_management
       when 5
         exit 0
       else
@@ -94,6 +97,13 @@ def validate_drive(sprint_num)
     exit 0
   end
 end
+
+#See comment below on supervisor_email method
+#def email_management
+#  @cards.clear
+#  all_cards
+#  supervisor_email
+#end
 
 def add_item(worksheet, card)
   users = []
@@ -152,7 +162,8 @@ end
 
 def decrement_sprint
   num = File.open(FILE, &:readline)
-  num.to_i -= 1
+  num = num.to_i
+  num -= 1
   File.open(FILE, 'w') { |f| f.write(num.to_s) }
 end
 
@@ -283,23 +294,62 @@ def add_cards_to_sprint
   notify_changes
 end
 
+#Nice to have but need to find a better way of truncating first week
+#def supervisor_email
+#  week = Date.today
+#  File.open(EMAIL_FILE, 'w') do |f|
+#    f.puts "Items done for the Week ending on #{week}"
+#    f.puts
+#    @cards.each_with_index do |c, i|
+#      f.puts "#{i + 1}: #{c.name}"
+#    end
+#  end
+#
+#  f = ''
+#  @cards.each_with_index do |c, i|
+#    f = f + "#{i + 1}: #{c.name}\n"
+#  end
+#
+#  mail = Mail.new do
+#    from "#{CONFIG['user']}"
+#    to "#{CONFIG['manager_email']}"
+#    subject "Prof services QA completed items week ending on #{week}"
+#    body "#{f}"
+#    add_file :filename => "Week #{week.to_s.gsub(",", "")}.txt", :content => File.read(EMAIL_FILE)
+#  end
+#
+#  mail.delivery_method :sendmail
+#  mail.deliver
+#end
+
+def fill_body(array)
+  b = ''
+  array.each_with_index { |c, i| b = b + "#{i + 1}: #{c.name}\n"}
+  b
+end
+
 def notify_changes
   sprint_num = File.open(FILE, &:readline)
   sprint_num = sprint_num.to_i
   sprint_num -= 1
   File.open(EMAIL_FILE, 'w') do |f|
-    f.puts "Items added to Sprint #{sprint_num}"
+    f.puts "Professional Services QA items completed Sprint #{sprint_num}"
     f.puts
     @cards.each_with_index do |c, i|
       f.puts "#{i + 1}: #{c.name}"
     end
   end
 
+  b = ''
+  @cards.each_with_index do |c, i|
+    b = b + "#{i + 1}: #{c.name}\n"
+  end
+
   mail = Mail.new do
     from "#{CONFIG['user']}"
     to "#{CONFIG['receipients']}"
-    subject "Sprint #{sprint_num} changed"
-    body  "See attachment for sprint items"
+    subject "Professional services QA completed items for Sprint #{sprint_num}"
+    body b
     add_file :filename => "Sprint #{sprint_num}.txt", :content => File.read(EMAIL_FILE)
   end
 

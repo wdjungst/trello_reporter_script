@@ -1,22 +1,40 @@
-Items added to Sprint 14
+Professional Services QA items completed Sprint 14
 
 1: Get Tylers github account set up and pull down netspace issues
 2: Fix netspace issues script v1
 3: idea map v2 netspace issues
 4: idea map trello archived reporting
 5: Commit code into canteloupe_koala
-6: NEX-574
-7: NEX-485
-8: NEX-285
-9: NEX-500
-10: NEX-505
-11: NEX-499
-12: Check fixes for become an academy and become a partner
-13: NEX-722
-14: NEX-701
-15: NEX-721
-16: Core canvas regression - Friday
-17: Cleanup netspace issues spreadsheet
-18: Parallels and windows 7 set up for tyler
-19: Make screenshots of the javascript overrides
-20: Go over regression process for running tests and getting tests to jeremyp
+6: Trello report script
+7: Review LT scripts make sure they work
+8: update code as per shawns comments in gerrit
+9: push new spec code
+10: NEX-574
+11: NEX-485
+12: NEX-285
+13: NEX-500
+14: NEX-505
+15: NEX-499
+16: Check fixes for become an academy and become a partner
+17: NEX-722
+18: NEX-701
+19: NEX-721
+20: NEX-744
+21: Validate tickets in Prod
+22: Verify buttons on outcomes page in test.
+23: NEX-501
+24: Investigate saml security flaw with multiple browsers open in liferay.  Find out just how big the problem is and what a user can and can't do
+25: Check "Deleting student takes you off of course management"
+26: Core canvas regression - Friday
+27: Liferay regression
+28: Cleanup netspace issues spreadsheet
+29: Meeting with Ben to discuss Netspace issues.
+30: Clean up regression tests
+31: Move feedback items that are marked not an issue or resolved over to there proper spreadsheets
+32: Set up local env for tyler
+33: Parallels and windows 7 set up for tyler
+34: Make screenshots of the javascript overrides
+35: Go over regression process for running tests and getting tests to jeremyp
+36: Get ticket validation sequence in order
+37: Get salesforce process in order
+38: Set up local env for Dave

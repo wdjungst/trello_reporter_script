@@ -2,7 +2,6 @@
 require 'rubygems'
 require 'yaml'
 require 'google_drive'
-require 'pry'
 require 'trello'
 require 'optparse'
 require 'mail'
@@ -21,7 +20,8 @@ Trello::Authorization.const_set :AuthPolicy, OAuthPolicy
 OAuthPolicy.consumer_credential = OAuthCredential.new(CONFIG['public_key'], CONFIG['secret'])
 OAuthPolicy.token = OAuthCredential.new(CONFIG['token'], nil)
 
-BOARD_ID = CONFIG['trello_board']
+MAIN_BOARD_ID = CONFIG['trello_board_main']
+DONE_BOARD_ID = CONFIG['trello_board_done']
 
 #List IDs - to get list id's run with option -i
 CODE = CONFIG['list1']
@@ -29,7 +29,14 @@ VALIDATION = CONFIG['list2']
 PROMOTE = CONFIG['list3']
 REGRESSION = CONFIG['list4']
 QA_MAINT = CONFIG['list5']
-OTHER = CONFIG['list6']
+PRO_SERVICES = CONFIG['list6']
+
+#List IDs from main board
+WEEKLY = CONFIG['main_list1']
+FUTURE = CONFIG['main_list2']
+TODO = CONFIG['main_list3']
+DOING = CONFIG['main_list4']
+PENDING = CONFIG['main_list5']
 
 @cards = []
 @col = 5
@@ -67,7 +74,6 @@ def menu
     puts "2.  Change sprint number"
     puts "3.  Add additional items to sprint"
     puts "4.  Revert last archive"
-    #puts "5.  Weekly update Done items to supervisor"
     puts "5.  Exit"
 
     choice = user_input
@@ -226,41 +232,74 @@ def add_sprint_sheet(sprint_number)
   validate_drive(sprint_number)
 end
 
-def all_cards
-  code = List.find(CODE)
-  code_cards = code.cards
-  code_cards.each do |c|
-    @cards << c
-  end
+def all_cards(board = DONE_BOARD_ID)
+  @cards.clear
+  if board = DONE_BOARD_ID
+    code = List.find(CODE)
+    code_cards = code.cards
+    code_cards.each do |c|
+      @cards << c
+    end
 
-  validation = List.find(VALIDATION)
-  validation_cards = validation.cards
-  validation_cards.each do |c|
-    @cards << c
-  end
+    validation = List.find(VALIDATION)
+    validation_cards = validation.cards
+    validation_cards.each do |c|
+      @cards << c
+    end
 
-  promote = List.find(PROMOTE)
-  promote_cards = promote.cards
-  promote_cards.each do |c|
-    @cards << c
-  end
+    promote = List.find(PROMOTE)
+    promote_cards = promote.cards
+    promote_cards.each do |c|
+      @cards << c
+    end
 
-  regression = List.find(REGRESSION)
-  regression_cards = regression.cards
-  regression_cards.each do |c|
-    @cards << c
-  end
+    regression = List.find(REGRESSION)
+    regression_cards = regression.cards
+    regression_cards.each do |c|
+      @cards << c
+    end
 
-  maint = List.find(QA_MAINT)
-  maint_cards = maint.cards
-  maint_cards.each do |c|
-    @cards << c
-  end
+    maint = List.find(QA_MAINT)
+    maint_cards = maint.cards
+    maint_cards.each do |c|
+      @cards << c
+    end
 
-  other = List.find(OTHER)
-  other_cards = other.cards
-  other_cards.each do |c|
-    @cards << c
+    other = List.find(PRO_SERVICES)
+    other_cards = other.cards
+    other_cards.each do |c|
+      @cards << c
+    end
+  elsif board = MAIN_BOARD_ID
+    weekly = List.find(WEEKLY)
+    weekly_cards = weekly.cards
+    weekly_cards.each do |c|
+      @cards << c
+    end
+
+    future = List.find(FUTURE)
+    future_cards = validation.cards
+    future_cards.each do |c|
+      @cards << c
+    end
+
+    todo = List.find(TODO)
+    todo_cards = todo.cards
+    todo_cards.each do |c|
+      @cards << c
+    end
+
+    doing = List.find(DOING)
+    doing_cards = doing.cards
+    doing_cards.each do |c|
+      @cards << c
+    end
+
+    pending = List.find(PENDING)
+    pending_cards = pending.cards
+    pending_cards.each do |c|
+      @cards << c
+    end
   end
 end
 
@@ -294,37 +333,9 @@ def add_cards_to_sprint
   notify_changes
 end
 
-#Nice to have but need to find a better way of truncating first week
-#def supervisor_email
-#  week = Date.today
-#  File.open(EMAIL_FILE, 'w') do |f|
-#    f.puts "Items done for the Week ending on #{week}"
-#    f.puts
-#    @cards.each_with_index do |c, i|
-#      f.puts "#{i + 1}: #{c.name}"
-#    end
-#  end
-#
-#  f = ''
-#  @cards.each_with_index do |c, i|
-#    f = f + "#{i + 1}: #{c.name}\n"
-#  end
-#
-#  mail = Mail.new do
-#    from "#{CONFIG['user']}"
-#    to "#{CONFIG['manager_email']}"
-#    subject "Prof services QA completed items week ending on #{week}"
-#    body "#{f}"
-#    add_file :filename => "Week #{week.to_s.gsub(",", "")}.txt", :content => File.read(EMAIL_FILE)
-#  end
-#
-#  mail.delivery_method :sendmail
-#  mail.deliver
-#end
-
 def fill_body(array)
   b = ''
-  array.each_with_index { |c, i| b = b + "#{i + 1}: #{c.name}\n"}
+  array.each_with_index { |c, i| b = b + "#{i + 1}: #{c.name}\n" }
   b
 end
 
@@ -364,8 +375,8 @@ def update_sprint_sheet
   add_cards_to_sprint
 end
 
-def list_ids
-  board = Board.find(BOARD_ID)
+def list_ids(board = DONE_BOARD_ID)
+  board = Board.find(board)
   lists = board.lists
   puts
   lists.each do |l|
@@ -378,17 +389,61 @@ def list_ids
   menu
 end
 
+def list_names(board)
+  [List.find(WEEKLY).name, List.find(FUTURE).name, List.find(TODO).name, List.find(DOING).name, List.find(PENDING).name]
+end
+
+def seperate_cards(current_board)
+  if current_board = MAIN_BOARD_ID
+    weekly = []
+    future = []
+    todo = []
+    doing = []
+    pending = []
+
+    @cards.each do |c|
+      if c.list_id = WEEKLY
+        weekly << c
+      end
+      if c.list_id = FUTURE
+        future << c
+      end
+      if c.list_id = TODO
+        todo << c
+      end
+      if c.list_id = DOING
+        future << c
+      end
+      if c.list_id = PENDING
+        pending << c
+      end
+    end
+    [weekly, future, todo, future, pending]
+  end
+end
+
+def display_all_cards(current_board = MAIN_BOARD_ID)
+  board = Board.find(current_board)
+  names = list_names(board)
+  all_cards(current_board)
+  cards = seperate_cards(current_board)
+end
+
 def options
   options = {}
   optparse = OptionParser.new do |opts|
     options[:simple] = false
     options[:id] = false
+    options[:all] = false
 
     opts.on('-s', '--simple', 'Simple mode no menu') do
       options[:simple] = true
     end
     opts.on('-i', '--id', 'Get list id\'s') do
       options[:id] = true
+    end
+    opts.on('-a', '--all', 'Display All Cards') do
+      options[:all] = true
     end
     opts.on('-h', '--help', 'Display this screen') do
       puts opts
@@ -402,6 +457,8 @@ def options
     update_sprint_sheet
   elsif options[:id]
     list_ids
+  elsif options[:all]
+    display_all_cards(MAIN_BOARD_ID)
   else
     while true
       menu

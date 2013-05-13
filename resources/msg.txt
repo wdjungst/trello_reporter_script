@@ -1,40 +1,50 @@
-Professional Services QA items completed Sprint 14
+Professional Services QA items completed Sprint 21
 
-1: Get Tylers github account set up and pull down netspace issues
-2: Fix netspace issues script v1
-3: idea map v2 netspace issues
-4: idea map trello archived reporting
-5: Commit code into canteloupe_koala
-6: Trello report script
-7: Review LT scripts make sure they work
-8: update code as per shawns comments in gerrit
-9: push new spec code
-10: NEX-574
-11: NEX-485
-12: NEX-285
-13: NEX-500
-14: NEX-505
-15: NEX-499
-16: Check fixes for become an academy and become a partner
-17: NEX-722
-18: NEX-701
-19: NEX-721
-20: NEX-744
-21: Validate tickets in Prod
-22: Verify buttons on outcomes page in test.
-23: NEX-501
-24: Investigate saml security flaw with multiple browsers open in liferay.  Find out just how big the problem is and what a user can and can't do
-25: Check "Deleting student takes you off of course management"
-26: Core canvas regression - Friday
-27: Liferay regression
-28: Cleanup netspace issues spreadsheet
-29: Meeting with Ben to discuss Netspace issues.
-30: Clean up regression tests
-31: Move feedback items that are marked not an issue or resolved over to there proper spreadsheets
-32: Set up local env for tyler
-33: Parallels and windows 7 set up for tyler
-34: Make screenshots of the javascript overrides
-35: Go over regression process for running tests and getting tests to jeremyp
-36: Get ticket validation sequence in order
-37: Get salesforce process in order
-38: Set up local env for Dave
+1: Load Test Rollcall reports
+2: Monitor LT Scripts for rollcall
+3: POC Form one training app
+4: Rollcall Load test after new commits are merged
+5: Validate changes in training spreadsheets
+6: NEX-1492
+7: Validate javascript override fixes
+8: https://gerrit.instructure.com/#/c/19617/
+9: NEX-1721
+10: PS-267
+11: https://gerrit.instructure.com/#/c/19720/
+12: https://gerrit.instructure.com/#/c/19768/
+13: CNVS-5351
+14: https://gerrit.instructure.com/#/c/19809/
+15: https://gerrit.instructure.com/#/c/19548/
+16: NEX-2553
+17: https://instructure.atlassian.net/browse/CNVS-1808
+18: https://gerrit.instructure.com/#/c/19963/
+19: overrides regression validation with Brandon
+20: NEX-1649
+21: NEX-551
+22: https://gerrit.instructure.com/#/c/20117/
+23: NEX-1721
+24: https://gerrit.instructure.com/#/c/20199/
+25: Figure out analytics for Cisco
+26: NEX-531
+27: CNVS-2802
+28: https://gerrit.instructure.com/#/c/19391/
+29: NEX-2648
+30: https://gerrit.instructure.com/#/c/20277/
+31: https://gerrit.instructure.com/#/c/20268/
+32: https://gerrit.instructure.com/#/c/20327/
+33: Liferay Regression
+34: Write regression tests rollcall
+35: Rollcall regression tests
+36: Liferay regressions
+37: Roll Call application map
+38: Bullet point list for QA Transition meeting
+39: Cisco QA transition meeting
+40: 50+ users in test with voucher eligibilty
+41: Update test cases 
+42: Export and Import Test Cases
+43: Talk to simon about watching rollcall load test logs
+44: Rollcall Demo for Product
+45: Training Dept Google Drive App
+46: Jira for rollcall issues in prod
+47: Add OATH issues to https://instructure.atlassian.net/browse/CNVS-5565
+48: Rollcall ui bug filed
